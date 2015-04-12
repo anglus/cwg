@@ -1,0 +1,87 @@
+#!/bin/ksh
+
+# cwg - the Constructed Word Generator, v 1.0 2006/03/24
+
+# Copyright (c) 2006 Matthew Morris <user="anglus"; domain="gmail.com">
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+usage="Usage: $(basename $0) [-h] [-c count] [-m match] [infile] [outfile ...]"
+help="Usage: $(basename $0) [-h] [-c count] [-m match] [infile] [outfile ...]\n\n -h\t\tShow help message and exit.\n\n -c count\tDisplay \"count\" lines of output, where \"count\" is a number.\n\t\tDefault is to display one line of output.\n\n -m match\tSpecify \"match\" as the first string (before the \":\") in the\n\t\t\"rules\" line of the \"rules\" file. \"Match\" string is case\n\t\tinsensitive. Default \"match\" string is \"RULES\" (or \"rules\").\n\n infile\t\tRead input from specified \"rules\" file.\n\t\tDefault is to read \"rules\" input from stdin.\n\n outfile ...\tWrite output to specified file(s).\n\t\tDefault is to write output to stdout.\n\nFor more help type \"man $(basename $0)\"."
+badfile="File does not exist, is not a regular file, or is not readable"
+match="RULES"
+sep=":"
+count=1
+
+while getopts :hc:m: OPTION
+do
+  case $OPTION in
+    h) print $help
+       exit 1 ;;
+    c) count=$OPTARG ;;
+    m) match=$OPTARG ;;
+    *) print $usage 1>&2
+       exit 1 ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+if [ "$#" -gt 0 ]
+then
+  if [[ -f "$1" && -r "$1" ]]
+  then
+    exec 3< $1
+    shift
+  else
+    print "$(basename $0): $(basename $1): $badfile" 1>&2
+    exit 1
+  fi
+else
+  exec 3<&0
+fi
+
+if [ "$#" -gt 0 ]
+then
+  set -A outfiles "$@"
+else
+  :
+fi
+
+while read -u3 line
+do
+  infile="${infile}$line\n"
+done
+
+set -A rules $(print $infile | grep -i '^'$match$sep' ' | cut -f2- -d' ') 
+if [ -z "${rules[*]}" ]
+then
+  badrules="Unable to find a match for \"$match$sep\" rules line in the input file"
+  print "$(basename $0): $badrules" 1>&2 
+  exit 1
+fi
+rulecount=${#rules[*]}
+
+while [ "${wordcount:=1}" -le $count ]
+do
+  randnum=$((RANDOM % rulecount))
+  randrule=${rules[$randnum]}
+  set -A splitrule $(print $randrule | sed 's/./& /g')
+  for token in ${splitrule[*]}
+  do
+    set -A graphemes $(print $infile | grep -i '^'$token$sep' ' | cut -f2- -d' ')
+    if [ -z "${graphemes[*]}" ]
+    then
+      badgraph="Unable to find a match for \"$token$sep\" graphemes line in the input file"
+      print "$(basename $0): $badgraph" 1>&2
+      exit 1
