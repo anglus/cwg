@@ -19,25 +19,25 @@ The Constructed Word Generator operates on data provided by the user, either in 
 
 USAGE
 
-Usage: `cwg [-h] [-c count] [-m match] [infile] [outfile ...]`
+`cwg [-h] [-c count] [-m match] [infile] [outfile ...]`
 
- -h		          
+ *-h*		          
  
  Show help message and exit.
 
- -c count	     
+ *-c count*	     
  
  Display "count" lines of output, where "count" is a number. Default is to display one line of output.
 
- -m match	     
+ *-m match*	     
  
  Specify "match" as the first string (before the ":") in the "rules" line of the "rules" file. "Match" string is case insensitive. Default "match" string is "RULES" (or "rules").
 
- infile		      
+ *infile*		      
  
  Read input from specified "rules" file. Default is to read "rules" input from stdin.
 
- outfile ...	  
+ *outfile ...*	  
  
  Write output to specified file(s). Default is to write output to stdout.
 
