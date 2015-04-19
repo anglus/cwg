@@ -10,8 +10,10 @@ INSTALLATION
 
 Download, copy, or move the file "cwg.ksh" to a directory that is in your PATH. Make the script executable. I prefer to rename my executable script to simply "cwg". The following example assumes you have a "$HOME/bin" directory that is in your PATH:
 
+```
 $ mv cwg.ksh ~/bin/cwg
 $ chmod +x ~/bin/cwg
+```
 
 The Constructed Word Generator operates on data provided by the user, either in the form of a rules file or entered directly from the keyboard. If you wish to test the script with some example files, download some of the sample "*.rules" files to a directory of your choice.
 
@@ -31,6 +33,7 @@ Usage: cwg [-h] [-c count] [-m match] [infile] [outfile ...]
 
 The Constructed Word Generator was not intended to be an interactive program, but you can enter your rules at the keyboard. Remember to type "CTRL-D" when you are finished entering your rules:
 
+```
 $ cwg
 rules: vcv cvc vcvc cvcv cvcvc
 v: a e i o u
@@ -38,4 +41,4 @@ c: p t c b d g f th ch s l r m n
 CTRL-D
 chelag
 $
-
+```
