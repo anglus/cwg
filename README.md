@@ -29,7 +29,6 @@ Usage: cwg [-h] [-c count] [-m match] [infile] [outfile ...]
 
  outfile ...	  Write output to specified file(s). Default is to write output to stdout.
 
-
 The Constructed Word Generator was not intended to be an interactive program, but you can enter your rules at the keyboard. Remember to type "CTRL-D" when you are finished entering your rules:
 
 $ cwg
