@@ -1,4 +1,5 @@
 # cwg
+
 ABOUT THE CONSTRUCTED WORD GENERATOR
 
 The Constructed Word Generator is a KornShell script that takes a set of rules from STDIN or a file and constructs one or more random words based on those rules. It can be used to generate words for an invented language or names for science fiction or fantasy stories. It was inspired by Curt Snyder's "romulan.c" (a C port of Star Trek author Diane Duane's BASIC program) and Jeffrey Henning's "LangMaker". The former program was written in C and had the Rihannsu phonemes hard-coded in. The latter program was written in Visual Basic for Windows, and could generate words using rules provided by the user. I wanted a program that did the same thing as LangMaker, but functioned more like a proper Unix program.
