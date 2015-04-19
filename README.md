@@ -10,6 +10,7 @@ INSTALLATION
 Download, copy, or move the file "cwg.ksh" to a directory that is in your PATH. Make the script executable. I prefer to rename my executable script to simply "cwg". The follwing example assumes you have a "$HOME/bin" directory that is in your PATH:
 
 $ mv cwg.ksh ~/bin/cwg
+
 $ chmod +x ~/bin/cwg
 
 The Constructed Word Generator operates on data provided by the user, either in the form of a rules file or entered directly from the keyboard. If you wish to test the script with some example files, download some of the sample "*.rules" files to a directory of your choice.
