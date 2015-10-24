@@ -85,3 +85,23 @@ do
       badgraph="Unable to find a match for \"$token$sep\" graphemes line in the input file"
       print "$(basename $0): $badgraph" 1>&2
       exit 1
+    fi
+    graphcount=${#graphemes[*]}
+    randnum=$((RANDOM % graphcount))
+    randgraph=${graphemes[$randnum]}
+    word=${word}$randgraph
+  done
+  if [ -n "${outfiles[*]}" ]
+  then
+    for file in ${outfiles[*]} 
+    do
+      print $word >> $file
+    done
+  else
+    print $word
+  fi
+  wordcount=$((wordcount + 1))
+  word=
+done
+
+exec 3<&-
